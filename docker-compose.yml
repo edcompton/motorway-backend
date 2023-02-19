@@ -1,4 +1,22 @@
 services:
+  app:
+    image: motorway-test-app
+    container_name: motorway-test-app
+    build:
+      context: .
+      target: motorway-test-app
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgres://user:password@db:5432/motorway
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=motorway
+      - POSTGRES_PORT=5432
+    depends_on:
+      - db
+
   db:
     image: motorway-test-backend
     container_name: motorway-test-backend

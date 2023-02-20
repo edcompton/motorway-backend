@@ -1,9 +1,19 @@
-import { pgClient } from '../server';
+import { pgClient, redisClient } from '../server';
 import { HttpError } from '../middleware/exceptions';
 import { StateLog } from '../interfaces/IPgQueries';
 import { isStateLog } from '../utils/typeGuards';
 
 export async function getVehicleStateLog(id: string, formattedTimestamp: string) {
+  const cacheKey = `stateLogs:${id}:${formattedTimestamp}`;
+
+  const cachedResult = await redisClient.get(cacheKey);
+  if (cachedResult) {
+    const parsedCacheData = JSON.parse(cachedResult);
+    if (isStateLog(parsedCacheData)) {
+      return parsedCacheData.state;
+    }
+  }
+
   const result = await pgClient.query<StateLog>(
     `
             SELECT *
@@ -25,5 +35,6 @@ export async function getVehicleStateLog(id: string, formattedTimestamp: string)
     throw new HttpError(500, `Returned state object is of unexpected type`);
   }
 
+  await redisClient.set(cacheKey, JSON.stringify(stateObject));
   return stateObject.state;
 }

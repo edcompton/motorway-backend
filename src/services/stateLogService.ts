@@ -1,7 +1,8 @@
-import { pgClient, redisClient } from '../server';
+import { redisClient } from '../server';
 import { HttpError } from '../middleware/exceptions';
 import { StateLog } from '../interfaces/IPgQueries';
 import { isStateLog } from '../utils/typeGuards';
+import pool from '../db';
 
 export async function getVehicleStateLog(id: string, formattedTimestamp: string) {
   const cacheKey = `stateLogs:${id}:${formattedTimestamp}`;
@@ -14,7 +15,7 @@ export async function getVehicleStateLog(id: string, formattedTimestamp: string)
     }
   }
 
-  const result = await pgClient.query<StateLog>(
+  const result = await pool.query<StateLog>(
     `
             SELECT *
             FROM "stateLogs"

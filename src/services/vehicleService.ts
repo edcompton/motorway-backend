@@ -1,7 +1,8 @@
-import { pgClient, redisClient } from '../server';
+import { redisClient } from '../server';
 import { HttpError } from '../middleware/exceptions';
 import { Vehicle } from '../interfaces/IPgQueries';
 import { isVehicle } from '../utils/typeGuards';
+import pool from '../db';
 
 export async function getVehicle(id: string) {
   const cacheKey = `vehicle:${id}`;
@@ -13,7 +14,7 @@ export async function getVehicle(id: string) {
     }
   }
 
-  const vehicleResult = await pgClient.query<Vehicle>(
+  const vehicleResult = await pool.query<Vehicle>(
     `
             SELECT *
             FROM "vehicles"

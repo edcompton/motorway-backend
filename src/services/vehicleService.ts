@@ -1,8 +1,7 @@
-import { redisClient } from '../server';
 import { HttpError } from '../middleware/exceptions';
 import { Vehicle } from '../interfaces/IPgQueries';
 import { isVehicle } from '../utils/typeGuards';
-import pool from '../db';
+import { pool, redisClient } from '../db';
 
 export async function getVehicle(id: string) {
   const cacheKey = `vehicle:${id}`;

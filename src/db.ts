@@ -1,4 +1,8 @@
 import { Pool } from 'pg';
+import * as redis from 'redis';
+import { RedisClientType } from 'redis';
+
+let redisClient: RedisClientType;
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -11,4 +15,28 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000, // how long to wait for a connection to become available
 });
 
-export default pool;
+export const connectToDatabase = async () => {
+  try {
+    await pool.connect();
+    console.log('Connected to database pool.');
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+};
+
+export const connectToRedis = async () => {
+  try {
+    redisClient = redis.createClient({ url: process.env.REDIS_URL });
+    redisClient.on('error', (error) => console.error(`Error : ${error}`));
+
+    redisClient.on('error', (error) => console.error(`Error : ${error}`));
+
+    await redisClient.connect();
+    console.log('Connected to Redis client.');
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { pool, redisClient };

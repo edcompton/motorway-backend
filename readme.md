@@ -30,13 +30,21 @@ example: `curl --location --request GET 'http://localhost:3000/vehicles/1?timest
 ```
 ### Folder Structure
 `src/`: This folder contains the source code of the application.
+
 `controllers/`: This folder contains the controllers that handle incoming requests and responses.
+
 `middleware/`: error handling and param validation files.
+
 `interfaces/`: Type interfaces used across the app.
+
 `routes/`: This folder contains the express Route object that can be built out with further functionality.
+
 `services/`: This folder contains the business logic services.
+
 `app.ts`: This file contains the main application initialization and configuration logic.
+
 `db.ts`: This file contains the database configuration and connection logic.
+
 
 ### Tests
 `npm test`

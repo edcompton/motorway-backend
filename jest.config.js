@@ -12,5 +12,6 @@ module.exports = {
       tsconfig: 'tsconfig.json',
     },
   },
+  collectCoverage: true,
   setupFilesAfterEnv: ['./jest.setup.js'],
 };

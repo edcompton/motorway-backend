@@ -16,7 +16,10 @@ Very enjoyable brief! Below is additions I've made to the approach, how to run t
 
 ### To Run
 1. `docker-compose build && docker-compose up`
+
+
 2. Send a request GET to the following URL `http://localhost:3000/vehicles/1?timestamp=2022-09-10%2010:23:54+00`
+
 example: `curl --location --request GET 'http://localhost:3000/vehicles/1?timestamp=2022-09-10%2010:23:54+00'`
 
 3. response should be the following;

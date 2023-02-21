@@ -1,9 +1,10 @@
 import { HttpError } from '../middleware/exceptions';
 import { Vehicle } from '../interfaces/IPgQueries';
 import { isVehicle } from '../utils/typeGuards';
-import { pool, redisClient } from '../db';
+import { pool } from '../db';
+import { RedisClientType } from 'redis';
 
-export async function getVehicle(id: string) {
+export async function getVehicle(redisClient: RedisClientType, id: string) {
   const cacheKey = `vehicle:${id}`;
   const cachedData = await redisClient.get(cacheKey);
   if (cachedData) {

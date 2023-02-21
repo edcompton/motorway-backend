@@ -38,8 +38,8 @@ describe('getVehicleInfoWithIdAndTimestamp', () => {
     (getVehicle as jest.Mock).mockResolvedValue({ id, make: 'Toyota', model: 'Camry' });
     await getVehicleInfoWithIdAndTimestamp(req, res, next);
 
-    expect(getVehicleStateLog).toHaveBeenCalledWith(id, formattedTimestamp);
-    expect(getVehicle).toHaveBeenCalledWith(id);
+    expect(getVehicleStateLog).toHaveBeenCalledWith(undefined, id, formattedTimestamp);
+    expect(getVehicle).toHaveBeenCalledWith(undefined, id);
     expect(res.json).toHaveBeenCalledWith({
       id,
       make: 'Toyota',

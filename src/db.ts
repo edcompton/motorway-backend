@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
-import * as redis from 'redis';
-import { RedisClientType } from 'redis';
+import redis, { RedisClientType } from 'redis';
+import redisMock from 'redis-mock';
 
 let redisClient: RedisClientType;
 
@@ -27,13 +27,19 @@ export const connectToDatabase = async () => {
 
 export const connectToRedis = async () => {
   try {
-    redisClient = redis.createClient({ url: process.env.REDIS_URL });
-    redisClient.on('error', (error) => console.error(`Error : ${error}`));
+    if (process.env.REDIS_URL) {
+      redisClient = redis.createClient({ url: process.env.REDIS_URL });
 
-    redisClient.on('error', (error) => console.error(`Error : ${error}`));
+      await redisClient.connect();
 
-    await redisClient.connect();
-    console.log('Connected to Redis client.');
+      redisClient.on('error', (error) => console.error(`Error : ${error}`));
+
+      redisClient.on('error', (error) => console.error(`Error : ${error}`));
+
+      console.log('Connected to Redis client.');
+    } else {
+      redisClient = redisMock.createClient();
+    }
   } catch (err) {
     console.error(err);
   }

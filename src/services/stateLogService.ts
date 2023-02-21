@@ -1,9 +1,10 @@
 import { HttpError } from '../middleware/exceptions';
 import { StateLog } from '../interfaces/IPgQueries';
 import { isStateLog } from '../utils/typeGuards';
-import { pool, redisClient } from '../db';
+import { pool } from '../db';
+import { RedisClientType } from 'redis';
 
-export async function getVehicleStateLog(id: string, formattedTimestamp: string) {
+export async function getVehicleStateLog(redisClient: RedisClientType, id: string, formattedTimestamp: string) {
   const cacheKey = `stateLogs:${id}:${formattedTimestamp}`;
 
   const cachedResult = await redisClient.get(cacheKey);

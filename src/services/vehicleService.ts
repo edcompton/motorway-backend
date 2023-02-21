@@ -6,6 +6,7 @@ import { RedisClientType } from 'redis';
 
 export async function getVehicle(redisClient: RedisClientType, id: string) {
   const cacheKey = `vehicle:${id}`;
+
   const cachedData = await redisClient.get(cacheKey);
   if (cachedData) {
     const parsedCacheData = JSON.parse(cachedData);

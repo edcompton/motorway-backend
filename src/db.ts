@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
-import redis, { RedisClientType } from 'redis';
+import * as redis from 'redis';
+import { RedisClientType } from 'redis';
 import redisMock from 'redis-mock';
 
 let redisClient: RedisClientType;

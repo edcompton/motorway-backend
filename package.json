@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Motorway backend code task",
   "scripts": {
-    "start": "ts-node src/app.ts",
+    "start": "ts-node src/server.ts",
     "test": "jest --config=jest.config.js --silent --detectOpenHandles",
     "lint": "eslint src/**/*.ts",
     "precommit": "lint-staged",
